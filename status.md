@@ -1,6 +1,9 @@
 # Frost Hop durum
 
 ## Son güncelleme
+- Stilize 2D görsel yenileme: gölgeli karakterler, eklemli hareket, yüz ve kıyafet detayları.
+- Önbellekli atlaslar, küçük ekranda azaltılmış çevre detayı, buz/slime platformlarında hacimli yüzeyler.
+- Gerçek 3D mesh veya normal-map shader kullanılmaz; 2D malzeme ve ışık yaklaşımı korunur.
 - Aktif 2× kombodan itibaren ayaklardan küçük renkli yıldız izi.
 - Aktif 20× kombodan itibaren küçük alev izi; parçacık bütçesi sınırlı, azaltılmış hareket desteği mevcut.
 - 100. katta Mor Sızıntı: mor duvarlar, slime platformlar, sızıntılar ve baloncuklar.
@@ -14,7 +17,7 @@
 - Mevcut cihaz rekorları korunur.
 
 ## Doğrulama
-- Üretim derlemesi başarılı; 15/15 otomatik test geçti.
+- Üretim derlemesi başarılı; 17/17 otomatik test geçti.
 - Fizik, efekt sınırları, tema geçişi, karakter kimlikleri, müzik zamanlaması ve ses kaynaklarının temizlenmesi için otomatik testler.
 - Üretim Worker HTML yanıtı ve karakter seçim semantiği testi.
 - Önceki sürüm kullanıcı tarafından mobilde oynandı; bu güncelleme için gerçek tarayıcı/cihaz testi henüz yapılmadı.

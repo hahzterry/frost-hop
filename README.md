@@ -70,3 +70,11 @@ Mobil görünüm dar ekranlara uyarlanır. Tam ekran API desteği olmayan taray�
 Sites yayını için `.openai/hosting.json` dosyasındaki kimlik bu dağıtıma aittir. Başka bir Site olarak kopyalarken bu kimliği yeniden kullanma. GitHub depo olarak kaynak kodunu barındırır; bu Worker çıktısı doğrudan GitHub Pages'e konulamaz. Cloudflare Workers veya Vinext destekleyen sunucuda çalıştırılabilir.
 
 Uygulama ağ üzerinden başka servis çağırmaz. Projeye gizli anahtar, `.env`, `node_modules` veya derleme çıktısı commit edilmemelidir. `status.md` ilerleme ve doğrulama notlarını içerir.
+
+## Görsel katman — stilize 2D yenileme
+
+Üç karakterin renkleri ve aksesuarları korunur. Yumuşak konturlar, gölgeli yüz/saç/kıyafet yüzeyleri, eklemli koşu ve havada pozlar kullanılır. Buz ve slime platformlarında pah hissi, kenar parıltıları ve temas gölgeleri; duvarlarda önbellekli yüzey varyasyonu bulunur.
+
+Oyun Canvas 2D kalır: gerçek 3D mesh/topology veya normal-map shader eklenmemiştir. Hacim ve kabartma hissi 2D ışık/gölge ile üretilir. Tek bir 384×160 karakter baş atlası (240 KiB RGBA), en fazla dört 256×128 duvar önbelleği (toplam 512 KiB) ve 2× DPR sınırı kullanılır. 380 CSS piksel altındaki oyun alanında ince duvar detayları kaldırılır, ortam parçacıkları yarıya indirilir; bu 2D detay seviyesi çarpışmaları etkilemez. Atlaslar oturum boyunca paylaşılır ve sabit boyutludur. Yeni indirilmesi gereken görsel dosya veya bağımlılık yoktur.
+
+Motor, hitbox, skor, kombo, müzik ve dokunmatik kontrol mantığı değiştirilmemiştir. 17 otomatik test geçer; fizik değişmezliği ve çizim dönüşümlerinin dengesi de kontrol edilir. Gerçek cihaz FPS ölçümü ve görsel tarayıcı testi yapılmamıştır.

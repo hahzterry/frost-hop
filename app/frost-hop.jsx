@@ -40,7 +40,7 @@ export default function FrostHop() {
     try{const n=Number(localStorage.getItem('frost-hop-best'));if(Number.isFinite(n)&&n>=0){bestRef.current=n;setBest(n);}const mute=localStorage.getItem('frost-hop-muted')==='true';setMuted(mute);mutedRef.current=mute;const savedCharacter=localStorage.getItem('frost-hop-character');if(validCharacter(savedCharacter)){characterRef.current=savedCharacter;setCharacter(savedCharacter);}const music=localStorage.getItem('frost-hop-music')!=='false';musicEnabledRef.current=music;setMusicEnabled(music);}catch{}
     const g=new TowerGame();gameRef.current=g;
     const canvas=canvasRef.current,ctx=canvas.getContext('2d');if(!ctx)return;
-    const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=WIDTH*dpr;canvas.height=HEIGHT*dpr;ctx.scale(dpr,dpr);ctx.imageSmoothingEnabled=false;
+    const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=WIDTH*dpr;canvas.height=HEIGHT*dpr;ctx.scale(dpr,dpr);ctx.imageSmoothingEnabled=true;
     const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
     let raf=0,last=0,acc=0,ui=0,clock=0;
     const keys={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',Space:'jump',ArrowUp:'jump',KeyW:'jump'};

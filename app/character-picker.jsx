@@ -7,7 +7,7 @@ function Portrait({ character }) {
   useEffect(() => {
     const canvas = ref.current, ctx = canvas.getContext('2d');
     if (!ctx) return;
-    ctx.clearRect(0,0,80,72);ctx.imageSmoothingEnabled=false;
+    ctx.clearRect(0,0,80,72);ctx.imageSmoothingEnabled=true;
     drawCharacter(ctx,character,{grounded:true,vx:0,facing:1},43,27,0,true);
   },[character]);
   return <canvas ref={ref} width={80} height={72} aria-hidden="true"/>;
