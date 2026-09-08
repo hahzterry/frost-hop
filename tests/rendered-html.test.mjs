@@ -6,4 +6,6 @@ test('production worker serves the playable Turkish game entry point',async()=>{
   assert.equal(response.status,200);
   const html=await response.text();
   assert.match(html,/<html[^>]*lang="tr"/);assert.match(html,/Frost Hop/);assert.match(html,/<canvas/);assert.match(html,/TIRMANIŞA BAŞLA/);assert.match(html,/Sola koş/);assert.match(html,/Zıpla/);assert.doesNotMatch(html,/Starter Project|codex-preview/);
+  for(const name of ["Buzcu","Groove","Riva","Müziği kapat"])assert.ok(html.includes(name));
+  assert.match(html,/role="radiogroup"/);
 });

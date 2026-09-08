@@ -31,12 +31,28 @@ npm start
 - Rekor ve ses tercihi yalnızca mevcut tarayıcının localStorage alanında tutulur. Hesap veya sunucuya skor gönderimi yoktur.
 - Sekme gizlendiğinde veya pencere odağını kaybettiğinde otomatik duraklatılır.
 
+## Karakterler, efektler ve müzik
+
+- **Buzcu:** ilk sürümdeki bere ve atkılı karakter.
+- **Groove:** afro saçlı, koyu tenli popstar; altın gözlük, mor sahne ceketi.
+- **Riva:** sarışın, kulaklıklı tekno dansçısı.
+- Tur öncesinde, tur sonunda veya duraklatma ekranında karakter seçilebilir. Seçim cihazda saklanır; bütün karakterlerin fizik ve çarpışma kutusu aynıdır.
+- **Aktif 2–19× kombo:** ayaklardan çıkan küçük, renkli dört uçlu yıldızlar.
+- **Aktif 20× ve üzeri:** küçük sıcak renkli alev izi. En fazla 24 parçacık; efekt kombonun sona ermesiyle söner. Azaltılmış hareket tercihinde izler gösterilmez.
+- **100. kat ve üzeri — Mor Sızıntı:** mor taşlar, slime kaplı yeşil platformlar, duvar sızıntıları, havada süzülen baloncuklar. Yeni tur buz temasına döner.
+- **138 BPM özgün tekno:** Web Audio ile davul, hi-hat, bas ve synth arpeji. Ses dosyası veya haricî müzik servisi gerekmez; orijinal Icy Tower müziği kullanılmaz.
+- Nota düğmesi müziği bağımsız açar/kapatır; hoparlör hem müziği hem efektleri sessize alır. Tercihler saklanır. Müzik ilk kullanıcı etkileşiminden sonra yalnızca oyun sürerken çalar; duraklatma, tur sonu ve sekme değişiminde durur.
+
 ## Teknoloji ve yapı
 
 React 19, JavaScript/JSX, HTML Canvas 2D, Web Audio API, Lucide React; Vinext/Vite derleme altyapısı. Framework giriş dosyaları TypeScript'tir; oyun simülasyonu ve çizimi saf JavaScript'tir. Ek oyun motoru, ücretli servis veya API anahtarı gerekmez.
 
 - `game/engine.mjs`: platform üretimi, fizik, çarpışma, skor ve oyun durumları. 120 Hz sabit zaman adımı; rastgele sayı üreticisi testlerde değiştirilebilir.
-- `game/renderer.mjs`: Canvas sahnesi ve özgün piksel karakter.
+- `game/renderer.mjs`: buz ve slime temalı Canvas sahneleri.
+- `game/characters.mjs`: üç özgün piksel karakterin ortak çizimi.
+- `game/effects.mjs`: kombo ayak izleri ve tema eşikleri.
+- `game/music.mjs`: özgün tekno bestesi, ses saatiyle nota planlama ve müzik yaşam döngüsü.
+- `app/character-picker.jsx`: klavye ve dokunmatik uyumlu karakter seçimi.
 - `app/frost-hop.jsx`: React arayüzü, çoklu dokunma, klavye, ses, kayıt ve yaşam döngüsü.
 - `app/globals.css`: telefon, tablet ve masaüstü düzenleri.
 - `tests/engine.test.mjs`: kritik oynanış testleri.

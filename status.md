@@ -1,21 +1,25 @@
 # Frost Hop durum
 
-## Tamamlananlar
-- React + Canvas tabanlı Türkçe arcade oyunu.
-- Sabit zaman adımlı ivme, hızla artan zıplama, duvar sekmesi, tek yönlü platformlar.
-- Erişilebilir aralıklarla sonsuz platform üretimi ve yükselen kamera.
-- Kombo/puan, cihazda rekor ve ses tercihi, özgün Web Audio efektleri.
-- Çoklu dokunma, klavye, duraklatma, tekrar oynama, sekme değişiminde otomatik duraklatma.
-- Mobil ve masaüstü düzenleri; tam ekran ve azaltılmış hareket desteği.
+## Son güncelleme
+- Aktif 2× kombodan itibaren ayaklardan küçük renkli yıldız izi.
+- Aktif 20× kombodan itibaren küçük alev izi; parçacık bütçesi sınırlı, azaltılmış hareket desteği mevcut.
+- 100. katta Mor Sızıntı: mor duvarlar, slime platformlar, sızıntılar ve baloncuklar.
+- Buzcu, afro saçlı popstar Groove ve sarışın tekno dansçısı Riva; seçim cihazda saklanır. Fizik tüm karakterlerde aynıdır.
+- 138 BPM özgün Web Audio tekno; ayrı müzik anahtarı, ana ses kapatma, duraklatma ve sekme gizlenince susma.
+- Başlangıç ve tur sonu ekranı yeni karakter seçimine göre dar ekranlara uyarlandı.
+
+## Korunan oynanış
+- 120 Hz sabit zaman adımlı ivme, hızla artan zıplama, duvar sekmesi, tek yönlü platformlar.
+- Sonsuz platformlar, yükselen kamera, kombo/puan, çoklu dokunma ve klavye.
+- Mevcut cihaz rekorları korunur.
 
 ## Doğrulama
-- 8/8 otomatik fizik ve üretim testi geçti: `tests/engine.test.mjs`.
-- Üretim derlemesi başarılı; Worker HTML yanıtı testi geçti (toplam 9/9).
-- Gerçek tarayıcı/cihaz testi bu aşamada yapılmadı.
+- Üretim derlemesi başarılı; 15/15 otomatik test geçti.
+- Fizik, efekt sınırları, tema geçişi, karakter kimlikleri, müzik zamanlaması ve ses kaynaklarının temizlenmesi için otomatik testler.
+- Üretim Worker HTML yanıtı ve karakter seçim semantiği testi.
+- Önceki sürüm kullanıcı tarafından mobilde oynandı; bu güncelleme için gerçek tarayıcı/cihaz testi henüz yapılmadı.
 
-## GitHub
+## Kaynak ve yayın
 Kaynak deposu: https://github.com/MrAllNeo/frost-hop
-
-Çalışan oyun: https://frost-hop.berkaysarac72.chatgpt.site
-
-GitHub kaynak kodunu barındırır. Oyun mevcut Sites dağıtımında çalışır; GitHub Pages yayını yapılandırılmamıştır.
+Oyun: https://frost-hop.berkaysarac72.chatgpt.site
+GitHub kaynak kodunu barındırır; GitHub Pages yayını yapılandırılmamıştır.
