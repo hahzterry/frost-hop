@@ -78,3 +78,9 @@ Uygulama ağ üzerinden başka servis çağırmaz. Projeye gizli anahtar, `.env`
 Oyun Canvas 2D kalır: gerçek 3D mesh/topology veya normal-map shader eklenmemiştir. Hacim ve kabartma hissi 2D ışık/gölge ile üretilir. Tek bir 384×160 karakter baş atlası (240 KiB RGBA), en fazla dört 256×128 duvar önbelleği (toplam 512 KiB) ve 2× DPR sınırı kullanılır. 380 CSS piksel altındaki oyun alanında ince duvar detayları kaldırılır, ortam parçacıkları yarıya indirilir; bu 2D detay seviyesi çarpışmaları etkilemez. Atlaslar oturum boyunca paylaşılır ve sabit boyutludur. Yeni indirilmesi gereken görsel dosya veya bağımlılık yoktur.
 
 Motor, hitbox, skor, kombo, müzik ve dokunmatik kontrol mantığı değiştirilmemiştir. 17 otomatik test geçer; fizik değişmezliği ve çizim dönüşümlerinin dengesi de kontrol edilir. Gerçek cihaz FPS ölçümü ve görsel tarayıcı testi yapılmamıştır.
+
+## Mobil çizim optimizasyonu
+
+Çizim en fazla 60 FPS; fizik mevcut 120 Hz sabit adımla çalışır. Platformlar, karakter materyalleri ve ışık katmanları 8 MiB / 128 giriş sınırı olan ortak LRU önbellekten çizilir. Önceki baş ve duvar atlasları ayrıca sabit sınırlarını korur. Çözünürlük ölçeği cihazın DPR değerinden (en çok 2×) başlar; iki saniyelik aktif oyun örneklerinde 48 FPS altı veya 12 ms üstü ortalama çizim süresinde 0,25 azalır (en az 1×). Dört rahat ölçüm penceresinden sonra 0,25 yükselir. Duraklama ve sekmeden dönüş örnekleri sıfırlanır. Çözünürlük yalnızca çizim tamponunu değiştirir, oyun koordinatlarını değiştirmez.
+
+60/90/120/144 Hz zaman çizelgeleri, çözünürlük histerezisi, önbellek sınırı ve sıcak önbellekte materyal/platform gradyanlarının tekrar oluşturulmaması otomatik test edilir. Bu ölçümler gerçek telefon FPS ölçümü değildir.

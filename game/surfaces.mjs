@@ -1,3 +1,4 @@
+import { sprites } from './sprite-cache.mjs';
 import { rounded } from './characters.mjs';
 const cache=new Map();
 export function detailLevel(width=480){return width<380?'low':'medium';}
@@ -22,7 +23,7 @@ export function masonry(ctx,slime,offset,detail){
  }
  if(tile){ctx.save();ctx.beginPath();ctx.rect(18,0,444,640);ctx.clip();for(let y=offset-128;y<640;y+=128)for(let x=18;x<480;x+=256)ctx.drawImage(tile,x,y);ctx.restore();}
 }
-export function platform(ctx,f,y,slime,accent){
+function paintPlatform(ctx,f,y,slime,accent){
  const x=f.x,w=f.w;
  const shadow=ctx.createLinearGradient(0,y+15,0,y+27);shadow.addColorStop(0,'#03081866');shadow.addColorStop(1,'#03081800');ctx.fillStyle=shadow;ctx.fillRect(x+3,y+15,w,12);
  const side=ctx.createLinearGradient(0,y,0,y+18);side.addColorStop(0,slime?'#be9cde':'#80b5cf');side.addColorStop(.3,slime?'#755393':'#3e7798');side.addColorStop(1,slime?'#3c2956':'#193d59');
@@ -38,7 +39,19 @@ export function platform(ctx,f,y,slime,accent){
  ctx.fillStyle=slime?'#b8eeaa':'#8edff0';ctx.fillRect(x+25,y+8,Math.max(0,w-50),1);
  if(f.floor%10===0){rounded(ctx,x+w/2-9,y+7,18,6,3,slime?'#b3ec9c':'#b4d5ff');ctx.fillStyle='#ffffffbb';ctx.fillRect(x+w/2-5,y+8,10,1);}
 }
-export function lightField(ctx,slime){
+function paintLightField(ctx,slime){
  const glow=ctx.createRadialGradient(110,100,8,160,150,390);glow.addColorStop(0,slime?'#d68cff1c':'#8feaff20');glow.addColorStop(1,'#00000000');ctx.fillStyle=glow;ctx.fillRect(18,0,444,640);
  const vignette=ctx.createLinearGradient(0,0,480,0);vignette.addColorStop(0,'#020a1955');vignette.addColorStop(.22,'#020a1900');vignette.addColorStop(.78,'#020a1900');vignette.addColorStop(1,'#020a1955');ctx.fillStyle=vignette;ctx.fillRect(18,0,444,640);
+}
+
+export function platform(ctx,f,y,slime,accent){
+ const w=f.w+3,h=27;
+ const key=`platform:${f.w}:${slime}:${accent}:${f.floor%10===0}`;
+ const sprite=sprites.get(key,w,h,c=>paintPlatform(c,{x:0,w:f.w,floor:f.floor},0,slime,accent));
+ if(sprite)ctx.drawImage(sprite,f.x,y,w,h);else paintPlatform(ctx,f,y,slime,accent);
+}
+
+export function lightField(ctx,slime){
+ const sprite=sprites.get(`light:${slime}`,480,640,c=>paintLightField(c,slime),1);
+ if(sprite)ctx.drawImage(sprite,0,0,480,640);else paintLightField(ctx,slime);
 }

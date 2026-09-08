@@ -1,6 +1,9 @@
 # Frost Hop durum
 
 ## Son güncelleme
+- Çizim 60 FPS ile sınırlandı; fizik 120 Hz olarak korundu.
+- Kare zamanına göre otomatik 1×–2× çözünürlük; yavaş yükseltme ve kademeli azaltma.
+- Platform/karakter materyali/ışık önbelleği: en fazla 8 MiB ve 128 giriş.
 - Stilize 2D görsel yenileme: gölgeli karakterler, eklemli hareket, yüz ve kıyafet detayları.
 - Önbellekli atlaslar, küçük ekranda azaltılmış çevre detayı, buz/slime platformlarında hacimli yüzeyler.
 - Gerçek 3D mesh veya normal-map shader kullanılmaz; 2D malzeme ve ışık yaklaşımı korunur.
@@ -17,7 +20,7 @@
 - Mevcut cihaz rekorları korunur.
 
 ## Doğrulama
-- Üretim derlemesi başarılı; 17/17 otomatik test geçti.
+- Üretim derlemesi başarılı; 21/21 otomatik test geçti.
 - Fizik, efekt sınırları, tema geçişi, karakter kimlikleri, müzik zamanlaması ve ses kaynaklarının temizlenmesi için otomatik testler.
 - Üretim Worker HTML yanıtı ve karakter seçim semantiği testi.
 - Önceki sürüm kullanıcı tarafından mobilde oynandı; bu güncelleme için gerçek tarayıcı/cihaz testi henüz yapılmadı.

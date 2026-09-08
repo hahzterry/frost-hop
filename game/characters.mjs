@@ -1,3 +1,4 @@
+import { sprites } from './sprite-cache.mjs';
 // Cosmetic rendering only. The engine's 28 × 40 collision box is unchanged.
 export const CHARACTERS = [
   { id: 'frost', name: 'Buzcu', description: 'Orijinal tırmanışçı', color: '#a2f0dc' },
@@ -14,8 +15,10 @@ export function rounded(ctx,x,y,w,h,r,fill) {
   ctx.fillStyle=fill;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();
 }
 function material(ctx,x,y,w,h,light,dark,r=4) {
-  const g=ctx.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,light);g.addColorStop(.35,light);g.addColorStop(1,dark);
-  rounded(ctx,x,y,w,h,r,g);
+  const paint=c=>{const g=c.createLinearGradient(0,0,w,h);g.addColorStop(0,light);g.addColorStop(.35,light);g.addColorStop(1,dark);rounded(c,0,0,w,h,r,g);};
+  const sprite=sprites.get(`material:${w}:${h}:${light}:${dark}:${r}`,w,h,paint);
+  if(sprite)ctx.drawImage(sprite,x,y,w,h);
+  else {ctx.save();ctx.translate(x,y);paint(ctx);ctx.restore();}
 }
 function oval(ctx,x,y,rx,ry,c) {ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();}
 function line(ctx,points,c,width=1) {ctx.strokeStyle=c;ctx.lineWidth=width;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(...points[0]);for(const p of points.slice(1))ctx.lineTo(...p);ctx.stroke();}

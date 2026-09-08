@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUp, Snowflake, Trophy, Volume2, VolumeX, Pause, Play, RotateCcw, Maximize, Zap, Mountain, Keyboard, Music2 } from 'lucide-react';
 import { TowerGame, WIDTH, HEIGHT, STEP } from '../game/engine.mjs';
+import { RenderBudget } from '../game/render-budget.mjs';
 import { renderGame } from '../game/renderer.mjs';
 import { FootTrail, themeForFloor, effectForCombo } from '../game/effects.mjs';
 import { validCharacter } from '../game/characters.mjs';
@@ -40,7 +41,10 @@ export default function FrostHop() {
     try{const n=Number(localStorage.getItem('frost-hop-best'));if(Number.isFinite(n)&&n>=0){bestRef.current=n;setBest(n);}const mute=localStorage.getItem('frost-hop-muted')==='true';setMuted(mute);mutedRef.current=mute;const savedCharacter=localStorage.getItem('frost-hop-character');if(validCharacter(savedCharacter)){characterRef.current=savedCharacter;setCharacter(savedCharacter);}const music=localStorage.getItem('frost-hop-music')!=='false';musicEnabledRef.current=music;setMusicEnabled(music);}catch{}
     const g=new TowerGame();gameRef.current=g;
     const canvas=canvasRef.current,ctx=canvas.getContext('2d');if(!ctx)return;
-    const dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=WIDTH*dpr;canvas.height=HEIGHT*dpr;ctx.scale(dpr,dpr);ctx.imageSmoothingEnabled=true;
+    const budget=new RenderBudget(window.devicePixelRatio||1);
+    let appliedScale=budget.scale;
+    const resizeBuffer=()=>{appliedScale=budget.scale;canvas.width=Math.round(WIDTH*budget.scale);canvas.height=Math.round(HEIGHT*budget.scale);ctx.setTransform(budget.scale,0,0,budget.scale,0,0);ctx.imageSmoothingEnabled=true;};
+    resizeBuffer();
     const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
     let raf=0,last=0,acc=0,ui=0,clock=0;
     const keys={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',Space:'jump',ArrowUp:'jump',KeyW:'jump'};
@@ -50,7 +54,7 @@ export default function FrostHop() {
       const action=keys[e.code];if(action){e.preventDefault();if(g.status==='playing')input.current[action].add('key:'+e.code);}
     };
     const up=e=>{const action=keys[e.code];if(action)input.current[action].delete('key:'+e.code);};
-    const suspend=()=>{clearInput();if(g.status==='playing'){g.pause();setStatus('paused');}musicRef.current?.stop();last=0;acc=0;};
+    const suspend=()=>{clearInput();if(g.status==='playing'){g.pause();setStatus('paused');}musicRef.current?.stop();last=0;acc=0;budget.reset();};
     const visibility=()=>{if(document.hidden)suspend();};
     const fullChange=()=>setFullscreen(!!document.fullscreenElement);
     window.addEventListener('keydown',down);window.addEventListener('keyup',up);window.addEventListener('blur',suspend);document.addEventListener('visibilitychange',visibility);document.addEventListener('fullscreenchange',fullChange);
@@ -74,7 +78,12 @@ export default function FrostHop() {
         particlesRef.current=particlesRef.current.filter(p=>p.life>0).slice(-100);
         trailRef.current.update(dt,g,reduce.matches);
       }else acc=0;
-      renderGame(ctx,g,clock,particlesRef.current,reduce.matches,characterRef.current,reduce.matches?[]:trailRef.current.particles);
+      if(budget.shouldDraw(ts)){
+        if(appliedScale!==budget.scale)resizeBuffer();
+        const began=performance.now();
+        renderGame(ctx,g,clock,particlesRef.current,reduce.matches,characterRef.current,reduce.matches?[]:trailRef.current.particles);
+        budget.sample(ts,performance.now()-began,g.status==='playing');
+      }
       ui+=dt;if(ui>.08){setStats({floor:g.floor,score:g.score,combo:g.combo,comboTimer:g.comboTimer,maxCombo:g.maxCombo,speed:Math.abs(g.player.vx)/430,time:g.time});ui=0;}
       raf=requestAnimationFrame(frame);
     }
